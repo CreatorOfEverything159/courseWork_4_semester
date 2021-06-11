@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<div class="container">
+  <div class="container__center">
+    <h1 class="mainHeader">Experiment</h1>
+
+
+    <form id="file-settings">
+      <input type="file" id="file" value="Выбрать файл">
+      <input type="submit" id="experiment" value="Эксперимент">
+      <div id="result"></div>
+      <canvas id="myChart1" width="400" height="400"></canvas>
+      <canvas id="myChart2" width="400" height="400"></canvas>
+    </form>
+
+
+    <div class="buttons_block">
+      <a href="../index.html" class="gradient-button">Главная</a>
+      <span id="output-path"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  import {NGrams} from "../js/NGrams";
+
+  const fs = require('fs')
+  const path = require('path')
+  const os = require('os')
+  let Chart = require('chart.js');
+
+  const form = document.getElementById('file-settings')
+  const myFile = document.getElementById('file')
+  const experiment = document.getElementById('experiment')
+
+  form.addEventListener('submit', ev => {
+    ev.preventDefault()
+
+    const theFile = myFile.files[0].path
+
+    fs.readFile(theFile, 'utf8', function (err, contents) {
+      let newPathMass = theFile.split('\\')
+      let fileName = newPathMass[newPathMass.length - 1].split('_')
+      let theWord = fileName[fileName.length - 1].split('.')
+
+      let ngram = new NGrams()
+
+      ngram.search(contents, theWord[0])
+
+      let ctx1 = document.getElementById('myChart1')
+      let myChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['1-gram', '2-gram', '3-gram', '4-gram', '5-gram'],
+          datasets: [{
+            // label: 'Найдено слов',
+            data: ngram.findWord,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      let ctx2 = document.getElementById('myChart2')
+      let myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: ['1-gram', '2-gram', '3-gram', '4-gram', '5-gram'],
+          datasets: [{
+            // label: 'Найдено слов',
+            data: ngram.times,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+
+  })
+
+  // const DATA_COUNT = 5;
+  // const NUMBER_CFG = {count: DATA_COUNT};
+  //
+  // const labels = ['1-gram', '2-gram', '3-gram', '4-gram', '5-gram'];
+  // const data = {
+  //   labels: labels,
+  //   datasets: [
+  //     {
+  //       label: 'Найденные слова',
+  //       data: [10000, 8543, 5643, 3256, 1765],
+  //       borderColor: Utils.CHART_COLORS.red,
+  //       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+  //     },
+  //     {
+  //       label: 'Время, мс',
+  //       data: [320, 277, 239, 203, 177],
+  //       borderColor: Utils.CHART_COLORS.blue,
+  //       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+  //     }
+  //   ]
+  // };
+</script>
+</body>
+</html>
