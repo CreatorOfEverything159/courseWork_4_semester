@@ -30,6 +30,9 @@ let myChart1 = new Chart(ctx1, {
         ]
     },
     options: {
+        plugins: {
+            color: ['#fff'],
+        },
         responsive: true,
         interaction: {
             mode: 'index',
@@ -37,7 +40,26 @@ let myChart1 = new Chart(ctx1, {
         },
         stacked: false,
         scales: {
+            x: {
+                ticks: {
+                    color: '#FFF',
+                },
+                grid: {
+                    drawOnChartArea: false,
+                },
+            },
+            y: {
+                grid: {
+                    color: '#ffffff'
+                },
+                ticks: {
+                    color: '#FFF',
+                },
+            },
             y1: {
+                ticks: {
+                    color: '#ffffff',
+                },
                 type: 'linear',
                 display: true,
                 position: 'right',
