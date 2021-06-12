@@ -13,22 +13,98 @@
 <div id="stars3"></div>
 
 
-<div class="container">
+<div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'main')" id="defaultOpen">Главная</button>
+    <button class="tablinks" onclick="openCity(event, 'gen')">Генерация</button>
+    <button class="tablinks" onclick="openCity(event, 'exp')">Эксперимент</button>
+</div>
 
+<div id="main" class="container">
     <div class="container__center">
         <h1 class="mainHeader">Добро пожаловать!</h1>
         <p class="container__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis eos ipsum
             molestiae reiciendis vel? Ad animi at autem commodi dolores eius eligendi excepturi exercitationem expedita
             facere in itaque nobis obcaecati omnis possimus provident quam quidem quisquam quod sed, sit tempora
             veritatis. Doloribus expedita fugit, ipsam iusto tempora unde ut. Nulla.</p>
-
-        <div class="buttons_block">
-            <a href="html/generation.html" class="gradient-button">Генерация</a>
-            <a href="html/experiment.html" class="gradient-button">Эксперимент</a>
-        </div>
     </div>
-
 </div>
+
+<div id="gen" class="container">
+    <div class="container__center">
+
+        <h1 class="mainHeader">Генерация</h1>
+        <form id="generationSetting">
+
+            <p class="form-text">Количество слов в генерируемом файле</p>
+            <input type="number" id="all-words" value="10000" class="textInput">
+            <p class="form-text">Количество искомых слов</p>
+            <input type="number" id="search-words" value="100" class="textInput">
+            <p class="form-text">Искомое слово</p>
+            <input type="text" id="the-word" value="THEWORD" class="textInput">
+
+            <div class="buttons">
+                <button type="submit" class="btn">Генерировать</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div id="exp" class="container">
+    <div class="container__center">
+
+        <h1 class="mainHeader">Эксперимент</h1>
+        <form id="experimentSettings">
+
+            <div class="buttons">
+                <div class="field__wrapper">
+
+                    <input name="file" type="file" id="file" class="field field__file" multiple>
+
+                    <label class="field__file-wrapper" for="file">
+                        <div class="field__file-fake">Файл не вбран</div>
+                        <div class="field__file-button">Выбрать</div>
+                    </label>
+
+                </div>
+            </div>
+            <canvas id="myChart1" width="600" height="400"></canvas>
+
+            <div class="buttons">
+                <button type="submit" id="experiment" class="btn">Эксперимент</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script src="js/generation/FileGenerator.js"></script>
+<script src="js/generation/generation.js"></script>
+<script src="js/experiment/NGrams.js"></script>
+<script src="js/experiment/experiment.js"></script>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+
+        tabcontent = document.getElementsByClassName("container");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("defaultOpen").click();
+</script>
 
 </body>
 </html>
