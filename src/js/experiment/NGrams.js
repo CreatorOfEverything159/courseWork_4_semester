@@ -38,10 +38,4 @@ class NGrams {
         }
         return mass
     }
-
-    print(str) {
-        return (function (el, text) {
-            return el.html(el.html() + (text || ''));
-        }($('#console'), [].join.call(str, ' ')));
-    }
 }
