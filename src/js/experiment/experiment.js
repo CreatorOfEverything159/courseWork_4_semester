@@ -3,9 +3,16 @@ const path = require('path')
 const os = require('os')
 let Chart = require('chart.js');
 
+closeButton.addEventListener("click", () => {
+    modal.classList.remove('active')
+    modalOverlay.classList.remove('active')
+    modalTitle.classList.remove('active')
+    modalText.classList.remove('active')
+})
+
 const form1 = document.getElementById('experimentSettings')
 const myFile = document.getElementById('file')
-const experiment = document.getElementById('experiment')
+let experimentWord = document.getElementById('experiment-word')
 
 let ctx1 = document.getElementById('myChart1')
 let myChart1 = new Chart(ctx1, {
@@ -82,22 +89,38 @@ Array.prototype.forEach.call(fields, function (input) {
         let countFiles = '';
         let fileName = myFile.files[0].path.split('\\')
         label.querySelector('.field__file-fake').innerText = 'Файл: ' + fileName[fileName.length - 1];
+        let newPathMass = fileName
+        console.log('theFile', fileName)
+        let fileN = newPathMass[newPathMass.length - 1].split('_')
+        console.log('fileName', fileName)
+        let theWord = fileN[0]
+        console.log('theWord', theWord)
+        experimentWord.value = theWord
     });
 });
 
 form1.addEventListener('submit', ev => {
     ev.preventDefault()
+    const percent = Number(document.getElementById('percent').value)
+
+    // console.log(percent)
 
     const theFile = myFile.files[0].path
 
     fs.readFile(theFile, 'utf8', function (err, contents) {
-        let newPathMass = theFile.split('\\')
-        let fileName = newPathMass[newPathMass.length - 1].split('_')
-        let theWord = fileName[fileName.length - 1].split('.')
+        let theWord = experimentWord.value
 
         let ngram = new NGrams()
 
-        ngram.search(contents, theWord[0])
+        ngram.search(contents, theWord, percent)
+
+        modalText.innerHTML = ''
+        modalTitle.textContent = 'График успешно построен!'
+
+        modal.classList.add('active')
+        modalOverlay.classList.add('active')
+        modalTitle.classList.add('active')
+        modalText.classList.add('active')
 
         myChart1.data.datasets[0].data = ngram.findWord
         myChart1.data.datasets[1].data = ngram.times

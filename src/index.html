@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>index file</title>
+    <title>N-gram experementator</title>
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
@@ -18,6 +18,17 @@
     <button class="tablinks" onclick="openCity(event, 'gen')">Генерация</button>
     <button class="tablinks" onclick="openCity(event, 'exp')">Эксперимент</button>
 </div>
+
+<div class="modal" id="modal">
+    <h1 class="modal__title mainHeader" id="modal__title"></h1>
+    <div class="modal__text" id="modal__text"></div>
+
+    <div class="buttons">
+        <button class="close-button btn" id="close-button">Закрыть</button>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
 
 <div id="main" class="container">
     <div class="container__center">
@@ -36,11 +47,13 @@
         <form id="generationSetting">
 
             <p class="form-text">Количество слов в генерируемом файле</p>
-            <input type="number" id="all-words" value="10000" class="textInput">
-            <p class="form-text">Количество искомых слов</p>
-            <input type="number" id="search-words" value="100" class="textInput">
+            <input type="number" min="10000" max="10000000" id="all-words" value="10000" class="textInput">
             <p class="form-text">Искомое слово</p>
             <input type="text" id="the-word" value="THEWORD" class="textInput">
+            <p class="form-text">Количество искомых слов</p>
+            <input type="number" min="0" max="10000000" id="search-words" value="100" class="textInput">
+            <p class="form-text">Количество ошибок в искомом слове</p>
+            <input type="number" min="0" max="20" id="mistakes-count" value="1" class="textInput">
 
             <div class="buttons">
                 <button type="submit" class="btn">Генерировать</button>
@@ -69,7 +82,14 @@
 
                 </div>
             </div>
-            <canvas id="myChart1" width="600" height="400"></canvas>
+
+            <p class="form-text">Искомое слово</p>
+            <input type="text" id="experiment-word" value="" class="textInput">
+
+            <p class="form-text">% совпадений n-грамм</p>
+            <input type="number" min="0" max="100" id="percent" value="100" class="textInput">
+
+            <canvas id="myChart1" width="600" height="300"></canvas>
 
             <div class="buttons">
                 <button type="submit" id="experiment" class="btn">Эксперимент</button>

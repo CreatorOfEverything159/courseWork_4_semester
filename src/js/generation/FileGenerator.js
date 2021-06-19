@@ -20,7 +20,7 @@ class FileGenerator {
         })
     }
 
-    errorWordGen(word, countWords) {
+    errorWordGen(word, countWords, mistakesCount) {
         let len = word.length
         let arr_ru = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ь', 'ы', 'ъ', 'э', 'ю', 'я'];
         let lettersLen = arr_ru.length
@@ -31,17 +31,14 @@ class FileGenerator {
         for (let i = 0; i < countWords; i++) {
             let newWord = word.split('')
 
-            // кол-во ошибок в слове
-            let errorsCount = Math.floor(Math.random() * len / 2)
-
             // места ошибок в слове
             let placeError = []
 
-            while (placeError.length < errorsCount) {
+            while (placeError.length < mistakesCount) {
                 placeError.push(Math.floor(Math.random() * len))
             }
 
-            for (let i = 0; i < errorsCount; i++) {
+            for (let i = 0; i < mistakesCount; i++) {
                 newWord.splice(placeError[i], 1, arr_ru[Math.floor(Math.random() * lettersLen)])
             }
 
@@ -68,7 +65,7 @@ class FileGenerator {
 
         let word = words[Math.floor(Math.random() * words.length)]
 
-        let result = ''
+        let result = ' '
         let wordLen = 0
         for (let i = 0; i < allWords; i++) {
             result += word + ' ';
