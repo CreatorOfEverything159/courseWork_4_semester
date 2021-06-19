@@ -18,7 +18,7 @@ body {
 }
 
 .container__center {
-    width: 600px;
+    width: 900px;
     margin: 0 auto;
     position: absolute;
     top: 50%;
@@ -41,8 +41,19 @@ body {
 }
 
 form {
-    width: 600px;
+    width: 900px;
     margin: 0 auto;
+}
+
+.graph {
+    width: 49%;
+    display: inline-block;
+}
+
+.form__pos {
+    float: left;
+    width: 40%;
+    margin: 0 40px;
 }
 
 .form-text {
@@ -52,7 +63,7 @@ form {
 }
 
 .textInput {
-    display: block;
+    /*display: block;*/
     text-align: center;
     width: 100%;
     padding: 10px 0;

@@ -15,10 +15,73 @@ const myFile = document.getElementById('file')
 let experimentWord = document.getElementById('experiment-word')
 
 let ctx1 = document.getElementById('myChart1')
+let ctx2 = document.getElementById('myChart2')
 let myChart1 = new Chart(ctx1, {
     type: 'bar',
     data: {
-        labels: ['1-gram', '2-gram', '3-gram', '4-gram', '5-gram'],
+        labels: ['1-граммы', '2-граммы', '3-граммы', '4-граммы', '5-граммы'],
+        datasets: [
+            {
+                label: 'Слова, шт.',
+                data: [],
+                borderColor: ['rgba(63,166,246,0.5)'],
+                backgroundColor: ['rgba(63,166,246,1)'],
+                yAxisID: 'y',
+            },
+            {
+                label: 'Время, мс.',
+                data: [],
+                borderColor: ['rgba(158,239,255,0.5)'],
+                backgroundColor: ['rgba(115,244,255, 1)'],
+                yAxisID: 'y1',
+            }
+        ]
+    },
+    options: {
+        plugins: {
+            color: ['#fff'],
+        },
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
+        stacked: false,
+        scales: {
+            x: {
+                ticks: {
+                    color: '#FFF',
+                },
+                grid: {
+                    drawOnChartArea: false,
+                },
+            },
+            y: {
+                grid: {
+                    color: '#ffffff'
+                },
+                ticks: {
+                    color: '#FFF',
+                },
+            },
+            y1: {
+                ticks: {
+                    color: '#ffffff',
+                },
+                type: 'linear',
+                display: true,
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false,
+                },
+            },
+        }
+    },
+});
+let myChart2 = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['1-граммы', '2-граммы', '3-граммы', '4-граммы', '5-граммы'],
         datasets: [
             {
                 label: 'Слова, шт.',
@@ -79,22 +142,23 @@ let myChart1 = new Chart(ctx1, {
 });
 
 myChart1.draw()
+myChart2.draw()
 
 let fields = document.querySelectorAll('.field__file');
 Array.prototype.forEach.call(fields, function (input) {
-    let label = input.nextElementSibling,
-        labelVal = label.querySelector('.field__file-fake').innerText;
+    let label = input.nextElementSibling
+    // let labelVal = label.querySelector('.field__file-fake').innerText;
 
     input.addEventListener('change', function (e) {
         let countFiles = '';
         let fileName = myFile.files[0].path.split('\\')
-        label.querySelector('.field__file-fake').innerText = 'Файл: ' + fileName[fileName.length - 1];
+        label.querySelector('.field__file-fake').innerText = fileName[fileName.length - 1];
         let newPathMass = fileName
-        console.log('theFile', fileName)
+        // console.log('theFile', fileName)
         let fileN = newPathMass[newPathMass.length - 1].split('_')
-        console.log('fileName', fileName)
+        // console.log('fileName', fileName)
         let theWord = fileN[0]
-        console.log('theWord', theWord)
+        // console.log('theWord', theWord)
         experimentWord.value = theWord
     });
 });
@@ -125,6 +189,10 @@ form1.addEventListener('submit', ev => {
         myChart1.data.datasets[0].data = ngram.findWord
         myChart1.data.datasets[1].data = ngram.times
 
+        myChart2.data.datasets[0].data = ngram.findWord
+        myChart2.data.datasets[1].data = ngram.times
+
         myChart1.update()
+        myChart2.update()
     });
 })

@@ -43,17 +43,31 @@
 <div id="gen" class="container">
     <div class="container__center">
 
-        <h1 class="mainHeader">Генерация</h1>
+<!--        <h1 class="mainHeader">Генерация</h1>-->
         <form id="generationSetting">
 
-            <p class="form-text">Количество слов в генерируемом файле</p>
-            <input type="number" min="10000" max="10000000" id="all-words" value="10000" class="textInput">
-            <p class="form-text">Искомое слово</p>
-            <input type="text" id="the-word" value="THEWORD" class="textInput">
-            <p class="form-text">Количество искомых слов</p>
-            <input type="number" min="0" max="10000000" id="search-words" value="100" class="textInput">
-            <p class="form-text">Количество ошибок в искомом слове</p>
-            <input type="number" min="0" max="20" id="mistakes-count" value="1" class="textInput">
+            <div class="form__pos">
+                <p class="form-text">Количество слов в генерируемом файле</p>
+                <input type="number" min="10000" max="10000000" id="all-words" value="10000" class="textInput">
+
+            </div>
+            <div class="form__pos">
+                <p class="form-text">Искомое слово</p>
+                <input type="text" id="the-word" value="THEWORD" class="textInput">
+
+            </div>
+            <div class="form__pos">
+                <p class="form-text">Количество искомых слов</p>
+                <input type="number" min="0" max="10000000" id="search-words" value="100" class="textInput">
+
+            </div>
+            <div class="form__pos">
+                <p class="form-text">Количество ошибок в искомом слове</p>
+                <input type="number" min="0" max="20" id="mistakes-count" value="1" class="textInput">
+
+            </div>
+
+            <canvas width="600" height="1"></canvas>
 
             <div class="buttons">
                 <button type="submit" class="btn">Генерировать</button>
@@ -67,29 +81,39 @@
 <div id="exp" class="container">
     <div class="container__center">
 
-        <h1 class="mainHeader">Эксперимент</h1>
+<!--        <h1 class="mainHeader">Эксперимент</h1>-->
         <form id="experimentSettings">
 
             <div class="buttons">
                 <div class="field__wrapper">
 
+                    <div class="form__pos">
                     <input name="file" type="file" id="file" class="field field__file" multiple>
-
                     <label class="field__file-wrapper" for="file">
                         <div class="field__file-fake">Файл не вбран</div>
                         <div class="field__file-button">Выбрать</div>
                     </label>
+                    </div>
 
                 </div>
             </div>
 
+            <div class="form__pos">
             <p class="form-text">Искомое слово</p>
             <input type="text" id="experiment-word" value="" class="textInput">
+            </div>
 
+            <div class="form__pos">
             <p class="form-text">% совпадений n-грамм</p>
             <input type="number" min="0" max="100" id="percent" value="100" class="textInput">
+            </div>
 
-            <canvas id="myChart1" width="600" height="300"></canvas>
+            <div class="graph">
+                <canvas id="myChart1" width="200" height="100"></canvas>
+            </div>
+            <div class="graph">
+                <canvas id="myChart2" width="200" height="100"></canvas>
+            </div>
 
             <div class="buttons">
                 <button type="submit" id="experiment" class="btn">Эксперимент</button>
