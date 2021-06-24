@@ -72,6 +72,6 @@ class FileGenerator {
 
         // console.log(result.split(' '))
         // document.getElementById('result').innerText = `Средняя длина слова: ${wordLen / allWords}`
-        return result
+        return result + ' '
     }
 }

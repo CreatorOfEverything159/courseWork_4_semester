@@ -106,6 +106,7 @@ let myChart1 = new Chart(ctx1, {
     },
 });
 
+let searchWordMass = []
 myChart1.draw()
 
 let fields = document.querySelectorAll('.field__file');
@@ -113,63 +114,70 @@ Array.prototype.forEach.call(fields, function (input) {
     let label = input.nextElementSibling
 
     input.addEventListener('change', function (e) {
-        let countFiles = '';
-        let fileName = myFile.files[0].path.split('\\')
         label.querySelector('.field__file-fake').innerText = 'Выбрано файлов: ' + myFile.files.length
-        let newPathMass = fileName
+        let newPathMass = myFile.files[0].path.split('\\')
         let fileN = newPathMass[newPathMass.length - 1].split('_')
         experimentWord.value = fileN[0]
+        searchWordMass = []
+
+        for (let i = 0; i < myFile.files.length; i++) {
+            searchWordMass.push(myFile.files[i].name.split('_')[0])
+        }
     });
 });
 
 form1.addEventListener('submit', ev => {
     ev.preventDefault()
-    const percent = Number(document.getElementById('percent').value)
 
-    // console.log(percent)
     let massDataWords = []
     let massDataTimes = []
     let massFilesName = []
     let massTimes = []
-    // console.log(myFile.files)
+
+    let text = ''
+    let ngram = new NGrams()
+
     for (let i = 0; i < myFile.files.length; i++) {
-        let theFile = myFile.files[i].path
-        fs.readFile(theFile, 'utf8', function (err, contents) {
-            let theWord = experimentWord.value
-            console.log(i)
+        let reader = new FileReader()
+
+        reader.readAsText(myFile.files[i])
+        let contents = ''
+        reader.onload = function (evt) {
+            contents = reader.result
+            let theWord = searchWordMass[i]
+            console.log(searchWordMass[i])
 
             massFilesName.push('Совпадения в ' + myFile.files[i].name)
             massTimes.push('Время в ' + myFile.files[i].name)
-            let ngram = new NGrams()
 
-            ngram.search(contents, theWord, percent)
+
+            ngram.search(contents, theWord)
             massDataWords.push(ngram.findWord)
             massDataTimes.push(ngram.times)
 
-            if (i === myFile.files.length - 1) {
-                modalText.innerHTML = ''
-                modalTitle.textContent = 'График успешно построен!'
-                modal.classList.add('active')
-                modalOverlay.classList.add('active')
-                modalTitle.classList.add('active')
-                modalText.classList.add('active')
+            modalText.innerHTML = ''
+            modalTitle.textContent = 'График успешно построен!'
+            modal.classList.add('active')
+            modalOverlay.classList.add('active')
+            modalTitle.classList.add('active')
+            modalText.classList.add('active')
 
-                myChart1.data.datasets[0].data = massDataWords[0]
-                myChart1.data.datasets[1].data = massDataTimes[0]
-                myChart1.data.datasets[2].data = massDataWords[1]
-                myChart1.data.datasets[3].data = massDataTimes[1]
-                myChart1.data.datasets[4].data = massDataWords[2]
-                myChart1.data.datasets[5].data = massDataTimes[2]
+            myChart1.data.datasets[0].data = massDataWords[0]
+            myChart1.data.datasets[1].data = massDataTimes[0]
+            myChart1.data.datasets[2].data = massDataWords[1]
+            myChart1.data.datasets[3].data = massDataTimes[1]
+            myChart1.data.datasets[4].data = massDataWords[2]
+            myChart1.data.datasets[5].data = massDataTimes[2]
 
-                myChart1.data.datasets[0].label = massFilesName[0]
-                myChart1.data.datasets[1].label = massTimes[0]
-                myChart1.data.datasets[2].label = massFilesName[1]
-                myChart1.data.datasets[3].label = massTimes[1]
-                myChart1.data.datasets[4].label = massFilesName[2]
-                myChart1.data.datasets[5].label = massTimes[2]
-                myChart1.update()
-            }
-        });
+            myChart1.data.datasets[0].label = massFilesName[0]
+            myChart1.data.datasets[1].label = massTimes[0]
+            myChart1.data.datasets[2].label = massFilesName[1]
+            myChart1.data.datasets[3].label = massTimes[1]
+            myChart1.data.datasets[4].label = massFilesName[2]
+            myChart1.data.datasets[5].label = massTimes[2]
+
+            myChart1.update()
+        }
     }
 
 })

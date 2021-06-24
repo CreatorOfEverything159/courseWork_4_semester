@@ -2,7 +2,7 @@ class NGrams {
     findWord
     times
 
-    search(text, searchingWord, percent) {
+    search(text, searchingWord) {
         let wordsMass = text.split(' ')
         let len = wordsMass.length
         this.findWord = []
@@ -12,7 +12,7 @@ class NGrams {
             let countTrueWord = 0
             const start= new Date().getTime();
             for (let i = 0; i < len; i++) {
-                if (this.isCoincidence(this.getNgrams(searchingWord, j+2), this.getNgrams(wordsMass[i], j+2), percent)) countTrueWord++
+                if (this.isCoincidence(this.getNgrams(searchingWord, j+2), this.getNgrams(wordsMass[i], j+2))) countTrueWord++
             }
             const end = new Date().getTime();
             this.findWord.push(countTrueWord)
@@ -26,7 +26,7 @@ class NGrams {
         for (let i = 0; i < len; i++) {
             if (searchingWordNGrams[i] === currentWordNGrams[i]) count += 1
         }
-        return count / len >= 0.1
+        return count / len >= 0.5
     }
 
     getNgrams(str, n) {

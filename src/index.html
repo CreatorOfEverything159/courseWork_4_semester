@@ -33,10 +33,9 @@
 <div id="main" class="container">
     <div class="container__center">
         <h1 class="mainHeader">Добро пожаловать!</h1>
-        <p class="container__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis eos ipsum
-            molestiae reiciendis vel? Ad animi at autem commodi dolores eius eligendi excepturi exercitationem expedita
-            facere in itaque nobis obcaecati omnis possimus provident quam quidem quisquam quod sed, sit tempora
-            veritatis. Doloribus expedita fugit, ipsam iusto tempora unde ut. Nulla.</p>
+        <p class="container__text">Эта компьютерная программа создана для генерации текстов и проведения экспериментов с помощью метода нечеткого поиска "N-грамм".</p>
+        <p class="container__text">Чтобы сгенерировать файл, зайдите в раздел ГЕНЕРАЦИЯ. Выберите количество слов в генерируемом тексте, укажите слово, которое будет искаться, укажите сколько раз оно должно встречаться в этом тексте, укажите число ошибок в этом слове.</p>
+        <p class="container__text">Чтобы провести эксперимент, зайдите в раздел ЭКСПЕРИМЕНТ. Выберите от одного до трех файлов. Нажмите книпку "ЭКСПЕРИМЕНТ"</p>
     </div>
 </div>
 
@@ -87,6 +86,7 @@
                 <div class="field__wrapper">
 
                     <div class="form__pos">
+                        <p></p>
                         <input name="file" type="file" id="file" class="field field__file" multiple>
                         <label class="field__file-wrapper" for="file">
                             <div class="field__file-fake">Файл не вбран</div>
@@ -94,17 +94,12 @@
                         </label>
                     </div>
 
+                    <div class="form__pos">
+                        <p class="form-text">Искомое слово</p>
+                        <input type="text" id="experiment-word" value="" class="textInput">
+                    </div>
+
                 </div>
-            </div>
-
-            <div class="form__pos">
-                <p class="form-text">Искомое слово</p>
-                <input type="text" id="experiment-word" value="" class="textInput">
-            </div>
-
-            <div class="form__pos">
-                <p class="form-text">% совпадений n-грамм</p>
-                <input type="number" min="0" max="100" id="percent" value="100" class="textInput">
             </div>
 
             <canvas id="myChart1" width="200" height="100"></canvas>
